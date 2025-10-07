@@ -9,7 +9,7 @@ WORKDIR /app
 # Copy pyproject.toml.
 COPY pyproject.toml .
 # Install Python dependencies using uv into a virtual environment.
-RUN uv sync --frozen --no-dev
+RUN uv sync --no-dev
 # Final Stage:
 # Use Python 3.12-slim base image (smaller footprint).
 FROM python:3.12-slim

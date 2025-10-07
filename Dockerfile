@@ -7,7 +7,7 @@ ENV PATH="/root/.local/bin:${PATH}"
 # Set working directory.
 WORKDIR /app
 # Copy pyproject.toml.
-COPY pyproject.toml README.md./
+COPY pyproject.toml README.md ./
 # Install Python dependencies using uv into a virtual environment.
 RUN uv sync 
 # Final Stage:

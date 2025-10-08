@@ -24,5 +24,3 @@ ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000
 # Set CMD to run FastAPI server on 0.0.0.0:8000.
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-# Copy tests directory into final stage
-COPY --from=builder /app/tests ./tests

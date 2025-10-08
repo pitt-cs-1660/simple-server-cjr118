@@ -3,6 +3,9 @@
 FROM python:3.12 as builder
 # Install uv package manager.
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+ENV VIRTUAL_ENV=/app/.venv
+ENV PATH="/app/.venv/bin:${PATH}"
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 # Set working directory.
 WORKDIR /app
 # Copy pyproject.toml. 
@@ -15,8 +18,9 @@ RUN uv sync --no-install-project --no-editable
 FROM python:3.12-slim
 # Copy venv from builder
 COPY --from=builder /app/.venv /app/.venv
-# Copy application source code.
+# Copy application source code. 
 COPY . /cc_simple_server ./
+# Copy application source code.
 COPY --from=builder /app/tests ./tests
 # Create non-root user for security.
 RUN useradd -m appuser

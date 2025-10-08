@@ -29,4 +29,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 # Expose port 8000.
 EXPOSE 8000
 # Set CMD to run FastAPI server on 0.0.0.0:8000.
-CMD ["uvicorn", "main:app","cc_simple_server.server:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "cc_simple_server.server:app", "--host", "0.0.0.0", "--port", "8000"]

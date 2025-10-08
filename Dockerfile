@@ -9,7 +9,6 @@ WORKDIR /app
 COPY pyproject.toml ./
 # Install python dependencies using uv into a virtual environment.
 RUN uv sync --no-install-project --no-editable
-RUN uv sync --no-editable
 # Final Stage 
 # Use Python 3.12-slim base image (smaller footprint)
 FROM python:3.12-slim
@@ -17,7 +16,6 @@ FROM python:3.12-slim
 COPY --from=builder /app/.venv /app/.venv
 # Copy application source code.
 COPY . /cc_simple_server ./
-COPY --from=builder /app/tests ./tests
 # Create non-root user for security.
 RUN useradd -m appuser
 USER appuser
@@ -26,3 +24,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000
 # Set CMD to run FastAPI server on 0.0.0.0:8000.
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Copy tests directory into final stage
+COPY --from=builder /app/tests ./tests

@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
 # Copy pyproject.toml. 
 COPY pyproject.toml ./
-COPY . /tests ./
+COPY . .
 # Install python dependencies using uv into a virtual environment.
 RUN uv sync --no-install-project --no-editable
 # Final Stage 
@@ -19,7 +19,7 @@ FROM python:3.12-slim
 # Copy venv from builder
 COPY --from=builder /app/.venv /app/.venv
 # Copy application source code. 
-COPY . . /
+COPY . /app
 # Copy application source code.
 COPY --from=builder /app/tests ./tests
 # Create non-root user for security.
@@ -29,4 +29,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 # Expose port 8000.
 EXPOSE 8000
 # Set CMD to run FastAPI server on 0.0.0.0:8000.
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app","cc_simple_server.server:app", "--host", "0.0.0.0", "--port", "8000"]

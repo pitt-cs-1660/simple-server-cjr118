@@ -19,7 +19,7 @@ FROM python:3.12-slim
 # Copy venv from builder
 COPY --from=builder /app/.venv /app/.venv
 # Copy application source code. 
-COPY . /cc_simple_server ./
+COPY . . /
 # Copy application source code.
 COPY --from=builder /app/tests ./tests
 # Create non-root user for security.

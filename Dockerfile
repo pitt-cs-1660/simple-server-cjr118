@@ -7,6 +7,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 WORKDIR /app
 # Copy pyproject.toml. 
 COPY pyproject.toml ./
+COPY . /tests ./
 # Install python dependencies using uv into a virtual environment.
 RUN uv sync --no-install-project --no-editable
 # Final Stage 
@@ -16,6 +17,7 @@ FROM python:3.12-slim
 COPY --from=builder /app/.venv /app/.venv
 # Copy application source code.
 COPY . /cc_simple_server ./
+COPY --from=builder /app/tests ./tests
 # Create non-root user for security.
 RUN useradd -m appuser
 USER appuser

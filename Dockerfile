@@ -4,10 +4,10 @@ FROM python:3.12 as builder
 # Install uv package manager.
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV VIRTUAL_ENV=/app/.venv
-ENV PATH="/app/.venv/bin:${PATH}"
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 # Set working directory.
 WORKDIR /app
+ENV PYTHONPATH=/app
 # Copy pyproject.toml. 
 COPY pyproject.toml ./
 COPY . .
@@ -22,6 +22,8 @@ COPY --from=builder /app/.venv /app/.venv
 COPY . /app
 # Copy application source code.
 COPY --from=builder /app/tests ./tests
+ENV PATH="/app/.venv/bin:${PATH}"
+ENV PYTHONPATH=/app
 # Create non-root user for security.
 RUN useradd -m appuser
 USER appuser

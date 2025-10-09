@@ -25,8 +25,8 @@ COPY --from=builder /app/tests ./tests
 ENV PATH="/app/.venv/bin:${PATH}"
 ENV PYTHONPATH=/app
 # Create non-root user for security.
-RUN useradd -m appuser
-USER appuser
+RUN useradd -m appuser && touch /app/tasks.db && chown -R appuser:appuser /app
+WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
 # Expose port 8000.
 EXPOSE 8000

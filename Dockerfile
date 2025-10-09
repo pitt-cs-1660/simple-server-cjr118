@@ -20,7 +20,6 @@ FROM python:3.12-slim
 COPY --from=builder /app/.venv /app/.venv
 # Copy application source code. 
 COPY . /app
-# Copy application source code.
 COPY --from=builder /app/tests ./tests
 ENV PATH="/app/.venv/bin:${PATH}"
 ENV PYTHONPATH=/app
